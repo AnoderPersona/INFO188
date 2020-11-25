@@ -1,0 +1,7 @@
+-tarea 1:
+	-modulo matriz
+	-leer archivo
+	-multiplicacion
+	-verificar producto
+	-escribir archivo
+	-tiempos de ejecucion
