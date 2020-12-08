@@ -1,9 +1,14 @@
 --Lee dos 3 y dos numeros, lee el primer y segundo archivo, sobrescribe el tercero
 import System.Environment --por el getArgs
 import Data.List.Split
+import System.CPUTime
 
 main :: IO ()
 main = do
+
+    principioTotal <- getCPUTime
+    --
+
     [fileA,fileB,fileC,bx,by] <- getArgs
     archivoA <- readFile fileA 
     archivoB <- readFile fileB
@@ -18,3 +23,9 @@ main = do
     print matrizA
     print matrizB
     --
+
+    --
+    finDeTodo <- getCPUTime
+    let tiempo = (fromIntegral (finDeTodo - principioTotal))/(10^9)
+    putStr ("El tiempo total en milisegundos es de ")
+    print tiempo
