@@ -5,4 +5,3 @@
 	-verificar producto
 	-escribir archivo
 	-tiempos de ejecucion
-	-escribir informe
