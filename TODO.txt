@@ -4,4 +4,4 @@
 	-multiplicacion
 	-verificar producto
 	-escribir archivo
-	-tiempos de ejecucion
+	+tiempos de ejecucion
