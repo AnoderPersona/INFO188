@@ -2,6 +2,11 @@
 import System.Environment --por el getArgs
 import Data.List.Split
 import System.CPUTime
+import matriz
+
+aListaDeString :: Matriz -> [[String]]
+aListaDeString (Matriz _ _ []) = []
+aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> show x) (take col mat)))] : (aListaDeString (Matriz filas col (drop col mat)))
 
 main :: IO ()
 main = do
@@ -46,7 +51,7 @@ main = do
 
     principioEscritura <- getCPUTime
     --
-    --escritura de archivo
+    writeFile fileC (unlines (concat (aListaDeString matrizResultante)))
     --
     finEscritura <- getCPUTime
     let tiempo = (fromIntegral (finEscritura - principioEscritura))/(10^9)
