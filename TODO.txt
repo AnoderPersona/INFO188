@@ -3,5 +3,5 @@
 	+leer archivo 
 	-multiplicacion
 	-verificar producto
-	-escribir archivo
+	+escribir archivo
 	+tiempos de ejecucion
