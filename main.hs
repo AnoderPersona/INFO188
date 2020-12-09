@@ -3,10 +3,14 @@ import System.Environment --por el getArgs
 import Data.List.Split
 import System.CPUTime
 import matriz
+import Data.Matrix
 
 aListaDeString :: Matriz -> [[String]]
 aListaDeString (Matriz _ _ []) = []
 aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> show x) (take col mat)))] : (aListaDeString (Matriz filas col (drop col mat)))
+
+productoMatricesEnteras :: Num a => Matrix a -> Matrix a -> Matrix a
+productoMatricesEnteras matrizA matrizB = multStd matrizA matrizB
 
 main :: IO ()
 main = do
@@ -58,6 +62,12 @@ main = do
     putStr ("El tiempo de salida en milisegundos es de ")
     print tiempo
 
+
+    --
+    --Producto a comparar:
+    print ("El produto de multiplicacion de matrices con las matrices enteras: ")
+    print (productoMatricesEnteras (fromList (head matrizA) (head (tail matrizA)) (tail (tail matrizA))) (fromList (head matrizB) (head (tail matrizB)) (tail (tail matrizB))))
+    
     --
 
     finDeTodo <- getCPUTime
