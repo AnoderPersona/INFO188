@@ -2,6 +2,6 @@
 	-modulo matriz
 	+leer archivo 
 	-multiplicacion
-	-verificar producto
+	+verificar producto
 	+escribir archivo
 	+tiempos de ejecucion
