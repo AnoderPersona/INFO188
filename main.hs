@@ -9,6 +9,7 @@ aListaDeString :: Matriz -> [[String]]
 aListaDeString (Matriz _ _ []) = []
 aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> show x) (take col mat)))] : (aListaDeString (Matriz filas col (drop col mat)))
 
+
 productoMatricesEnteras :: Num a => Matrix a -> Matrix a -> Matrix a
 productoMatricesEnteras matrizA matrizB = multStd matrizA matrizB
 
@@ -37,48 +38,47 @@ main = do
     
     --
 
-    
     --
 
     principioProducto <- getCPUTime
     --
     let matA = Matriz (head matrizA) (head (tail matrizA)) (tail (tail matrizA))
-    let bloquesA = aBloques matA
+    let bloquesA = aBloques matA (read bx :: Int) (read by :: Int)
 
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
-    let bloquesB = aBloques matB
+    let bloquesB = aBloques matB (read bx :: Int) (read by :: Int)
 
     let matrizResultante = multiplicar matA matB
 
-    print "La matriz obtenida por multiplicación por bloques es:"
+    putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
     print (matrizResultante)
 
     --
     finProducto <- getCPUTime
     let tiempo = (fromIntegral (finProducto - principioProducto))/(10^9)
-    putStr ("El tiempo de cómputo en milisegundos es de ")
+    putStr ("\nEl tiempo de cómputo en milisegundos es de ")
     print tiempo
 
     --
 
     principioEscritura <- getCPUTime
     --
-    writeFile fileC (unlines (concat (aListaDeString matrizResultante)))
+    writeFile fileC ( (show (filasMatriz matrizResultante)) ++ "\n" ++ (show (columnasMatriz matrizResultante)) ++ "\n" ++ (unlines (concat (aListaDeString matrizResultante))))
     --
     finEscritura <- getCPUTime
     let tiempo = (fromIntegral (finEscritura - principioEscritura))/(10^9)
-    putStr ("El tiempo de salida en milisegundos es de ")
+    putStr ("\nEl tiempo de salida en milisegundos es de ")
     print tiempo
 
 
     --
     --Producto a comparar:
-    print ("El produto de multiplicacion de matrices con las matrices enteras: ")
-    print (productoMatricesEnteras (fromList (head matrizA) (head (tail matrizA)) (tail (tail matrizA))) (fromList (head matrizB) (head (tail matrizB)) (tail (tail matrizB))))
-    
+    putStr "\nEl produto de multiplicacion de matrices con las matrices enteras: \n"
+    let resultadoAComparar = productoMatricesEnteras (fromList (head matrizA) (head (tail matrizA)) (tail (tail matrizA))) (fromList (head matrizB) (head (tail matrizB)) (tail (tail matrizB)))
+    print resultadoAComparar
     --
 
     finDeTodo <- getCPUTime
     let tiempo = (fromIntegral (finDeTodo - principioTotal))/(10^9)
-    putStr ("El tiempo total en milisegundos es de ")
+    putStr ("\nEl tiempo total en milisegundos es de ")
     print tiempo
