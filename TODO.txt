@@ -1,7 +1,7 @@
 -tarea 1:
 	-modulo matriz
-	-leer archivo
+	+leer archivo 
 	-multiplicacion
-	-verificar producto
-	-escribir archivo
-	-tiempos de ejecucion
+	+verificar producto
+	+escribir archivo
+	+tiempos de ejecucion
