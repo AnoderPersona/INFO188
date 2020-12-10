@@ -48,10 +48,11 @@ main = do
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
     let bloquesB = aBloques matB
 
+    let matrizResultante = multiplicar matA matB
 
     print "La matriz obtenida por multiplicación por bloques es:"
+    print (matrizResultante)
 
-    --multiplicacion de matrices
     --
     finProducto <- getCPUTime
     let tiempo = (fromIntegral (finProducto - principioProducto))/(10^9)
