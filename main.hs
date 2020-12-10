@@ -48,6 +48,9 @@ main = do
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
     let bloquesB = aBloques matB
 
+
+    print "La matriz obtenida por multiplicación por bloques es:"
+
     --multiplicacion de matrices
     --
     finProducto <- getCPUTime
