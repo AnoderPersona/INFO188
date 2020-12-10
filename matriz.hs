@@ -1,5 +1,7 @@
 module Matriz(
-Matriz(..)
+Matriz(..),
+sacarBloque,
+aBloques
 ) where
 
 type Filas = Int

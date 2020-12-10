@@ -1,8 +1,8 @@
---Lee dos 3 y dos numeros, lee el primer y segundo archivo, sobrescribe el tercero
+import Matriz
 import System.Environment --por el getArgs
 import Data.List.Split
+import Data.List
 import System.CPUTime
-import matriz
 import Data.Matrix
 
 aListaDeString :: Matriz -> [[String]]
@@ -37,13 +37,17 @@ main = do
     
     --
 
-    print matrizA
-    print matrizB
     
     --
 
     principioProducto <- getCPUTime
     --
+    let matA = Matriz (head matrizA) (head (tail matrizA)) (tail (tail matrizA))
+    let bloquesA = aBloques matA
+
+    let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
+    let bloquesB = aBloques matB
+
     --multiplicacion de matrices
     --
     finProducto <- getCPUTime
