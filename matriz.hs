@@ -1,5 +1,6 @@
 module Matriz(
 Matriz(..),
+aplanar,
 sacarBloque,
 aBloques,
 multiplicar,
@@ -12,7 +13,6 @@ type Columnas = Int
 
 data Matriz = Vacio | Matriz Filas Columnas [Int] | MatrizBloque Filas Columnas [Matriz]
     deriving Show
-
 
 
 sacarBloque :: Filas -> Columnas -> Int -> Columnas -> [Int] -> Filas -> Columnas -> [Int]

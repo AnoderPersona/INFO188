@@ -4,6 +4,17 @@ import Data.List.Split
 import Data.List
 import System.CPUTime
 import Data.Matrix
+-------------------------------------
+import Control.Parallel.Strategies
+
+evalPair' :: Strategy a -> Strategy a
+evalPair' estrategia a = do
+    a' <- estrategia a
+    return a'
+
+estrats :: Strategy a -> Strategy a
+estrats a = evalPair' (rparWith a)
+-------------------------------------
 
 aListaDeString :: Matriz -> [[String]]
 aListaDeString (Matriz _ _ []) = []
@@ -12,6 +23,12 @@ aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> sho
 
 productoMatricesEnteras :: Num a => Matrix a -> Matrix a -> Matrix a
 productoMatricesEnteras matrizA matrizB = multStd matrizA matrizB
+
+elemento0Tupla :: (a, b) -> a
+elemento0Tupla (a,_) = a
+
+elemento1Tupla :: (a, b) -> b
+elemento1Tupla (_,b) = b
 
 main :: IO ()
 main = do
@@ -37,21 +54,26 @@ main = do
     print tiempo
     
     --
-
     --
 
     principioProducto <- getCPUTime
     --
     let matA = Matriz (head matrizA) (head (tail matrizA)) (tail (tail matrizA))
-    let bloquesA = aBloques matA (read bx :: Int) (read by :: Int)
-
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
-    let bloquesB = aBloques matB (read bx :: Int) (read by :: Int)
+    
+    let tuplaMat = runEval $ do
 
-    let matrizResultante = multiplicar matA matB
+    
+        bloquesA <- rpar (aBloques matA (read bx :: Int) (read by :: Int))
+        bloquesB <- rpar (aBloques matB (read bx :: Int) (read by :: Int))
+        rseq bloquesA
+        rseq bloquesB
+        return (bloquesA, bloquesB)
 
-    putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
-    print (matrizResultante)
+    let matrizResultante = aplanar ((multiplicar (elemento0Tupla tuplaMat) (elemento1Tupla tuplaMat)) `using` estrats rseq)
+
+{-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
+    print (matrizResultante) -}
 
     --
     finProducto <- getCPUTime
@@ -73,9 +95,10 @@ main = do
 
     --
     --Producto a comparar:
-    putStr "\nEl produto de multiplicacion de matrices con las matrices enteras: \n"
+    {- putStr "\nEl produto de multiplicacion de matrices con las matrices enteras: \n"
     let resultadoAComparar = productoMatricesEnteras (fromList (head matrizA) (head (tail matrizA)) (tail (tail matrizA))) (fromList (head matrizB) (head (tail matrizB)) (tail (tail matrizB)))
     print resultadoAComparar
+     -}
     --
 
     finDeTodo <- getCPUTime

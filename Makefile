@@ -1,2 +1,2 @@
 all:
-	ghc main.hs -o prog
+	ghc -dynamic -threaded main.hs -o prog
