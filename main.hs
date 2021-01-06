@@ -3,7 +3,7 @@ import System.Environment --por el getArgs
 import Data.List.Split
 import Data.List
 import System.CPUTime
-import Data.Matrix
+{- import Data.Matrix -}
 -------------------------------------
 import Control.Parallel.Strategies
 
@@ -21,8 +21,8 @@ aListaDeString (Matriz _ _ []) = []
 aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> show x) (take col mat)))] : (aListaDeString (Matriz filas col (drop col mat)))
 
 
-productoMatricesEnteras :: Num a => Matrix a -> Matrix a -> Matrix a
-productoMatricesEnteras matrizA matrizB = multStd matrizA matrizB
+{- productoMatricesEnteras :: Num a => Matrix a -> Matrix a -> Matrix a
+productoMatricesEnteras matrizA matrizB = multStd matrizA matrizB -}
 
 elemento0Tupla :: (a, b) -> a
 elemento0Tupla (a,_) = a
