@@ -88,7 +88,7 @@ main = do
     let bloquesA = (aBloques matA (read bx :: Int) (read by :: Int))
     let bloquesB = (aBloques matB (read bx :: Int) (read by :: Int))
     
-    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB) `using` (parMat' rseq))
+    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rseq)
 
 {-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
     print (matrizResultante) -}
