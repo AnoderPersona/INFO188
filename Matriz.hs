@@ -10,16 +10,26 @@ matriz
 ) where
 
 -------------------------------------
-{- import Control.Parallel.Strategies
+import Control.Parallel.Strategies
 
-evalPair' :: Strategy a -> Strategy a
+{- evalPair' :: Strategy a -> Strategy a
 evalPair' estrategia a = do
     a' <- estrategia a
     return a'
 
 parPair' :: Strategy a -> Strategy a
-parPair' a = evalPair' (rparWith a)
---------------------- -}
+parPair' a = evalPair' (rparWith a) -}
+evalMat' :: Monad m => (Int -> m Int) -> Matriz -> m Matriz
+evalMat' estrat (Matriz x y []) = return (Matriz x y [])
+evalMat' estrat (Matriz x y (a:as)) = do
+    a' <- estrat a
+    as' <- evalMat' estrat (Matriz x y as)
+    return (Matriz x y (a':(matriz as')))
+
+
+parMat' :: Strategy Int -> Matriz -> Eval Matriz
+parMat' a = evalMat' (rparWith a)    
+---------------------
 
 type Filas    = Int
 type Columnas = Int
@@ -109,7 +119,7 @@ multiplicar'' x j i (Matriz my1 mx1 m1) (Matriz mx2 my2 m2)
 
 multiplicarB'' :: Int -> Int -> Int -> Matriz -> Matriz -> Matriz
 multiplicarB'' x j i (MatrizBloque my1 mx1 m1) (MatrizBloque mx2 my2 m2)
-    | x <   mx1   = (sumar (multiplicar (m1!!(x+mx1*j)) (m2!!(x+my2*i))) (multiplicarB'' (x+1) j i (MatrizBloque my1 mx1 m1) (MatrizBloque mx2 my2 m2)))
+    | x <   mx1   = (sumar (multiplicar (m1!!(x+mx1*j)) (m2!!(x+my2*i))) (multiplicarB'' (x+1) j i (MatrizBloque my1 mx1 m1) (MatrizBloque mx2 my2 m2)) `using` (parMat' rseq))
     | otherwise   = (matrizNula my1 mx2)
 
 multiplicar' :: Int -> Int -> Matriz -> Matriz -> [Int]
