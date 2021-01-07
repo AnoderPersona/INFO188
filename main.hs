@@ -45,31 +45,34 @@ elemento1Tupla (_,b) = b
 main :: IO ()
 main = do
 
-    principioTotal <- getCPUTime
+{-     principioTotal <- getCPUTime -}
     --
 
-    principioLectura <- getCPUTime
+  {-   principioLectura <- getCPUTime -}
     --
+    print "Aceptando archivos..."
     [fileA,fileB,fileC,bx,by] <- getArgs
     archivoA <- readFile fileA 
     archivoB <- readFile fileB
     --
+    print "Leyendo archivos..."
     let linesA = lines archivoA
     let matrizA =  (read (head linesA)::Int) : (read ((head . tail) linesA)::Int) : map (\x -> read x::Int) ((init . splitOn " " . foldl1 (++) . map (\x -> x ++ " ") . tail . tail) linesA)
     --
     let linesB = lines archivoB
     let matrizB =  (read (head linesB)::Int) : (read ((head . tail) linesB)::Int) : map (\x -> read x::Int) ((init . splitOn " " . foldl1 (++) . map (\x -> x ++ " ") . tail . tail) linesB)
     --
-    finLectura <- getCPUTime
-    let tiempo = (fromIntegral (finLectura - principioLectura))/(10^9)
+{-     finLectura <- getCPUTime
+{-     let tiempo = (fromIntegral (finLectura - principioLectura))/(10^9) -}
     putStr ("El tiempo de entrada en milisegundos es de ")
     print tiempo
+     -}
+    --
+    --
+{- 
+    principioProducto <- getCPUTime -}
+    --
     
-    --
-    --
-
-    principioProducto <- getCPUTime
-    --
     let matA = Matriz (head matrizA) (head (tail matrizA)) (tail (tail matrizA))
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
     {- a
@@ -87,30 +90,32 @@ main = do
 
     let bloquesA = (aBloques matA (read bx :: Int) (read by :: Int))
     let bloquesB = (aBloques matB (read bx :: Int) (read by :: Int))
-    
+
+    print "Calculando multiplicacion..."
     let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rseq)
 
 {-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
     print (matrizResultante) -}
 
     --
-    finProducto <- getCPUTime
+{-     finProducto <- getCPUTime
     let tiempo = (fromIntegral (finProducto - principioProducto))/(10^9)
     putStr ("\nEl tiempo de cómputo en milisegundos es de ")
-    print tiempo
+    print tiempo -}
 
     --
 
-    principioEscritura <- getCPUTime
+{-     principioEscritura <- getCPUTime -}
     --
+    print "Escribiendo archivo..."
     writeFile fileC ( (show (filasMatriz matrizResultante)) ++ "\n" ++ (show (columnasMatriz matrizResultante)) ++ "\n" ++ (unlines (concat (aListaDeString matrizResultante))))
     --
-    finEscritura <- getCPUTime
+{-     finEscritura <- getCPUTime
     let tiempo = (fromIntegral (finEscritura - principioEscritura))/(10^9)
     putStr ("\nEl tiempo de salida en milisegundos es de ")
     print tiempo
-
-
+ -}
+    print "Listoko"
     --
     --Producto a comparar:
     {- putStr "\nEl produto de multiplicacion de matrices con las matrices enteras: \n"
@@ -119,7 +124,7 @@ main = do
      -}
     --
 
-    finDeTodo <- getCPUTime
+{-     finDeTodo <- getCPUTime
     let tiempo = (fromIntegral (finDeTodo - principioTotal))/(10^9)
     putStr ("\nEl tiempo total en milisegundos es de ")
-    print tiempo
+    print tiempo -}
