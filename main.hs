@@ -60,7 +60,7 @@ main = do
     --
     let matA = Matriz (head matrizA) (head (tail matrizA)) (tail (tail matrizA))
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
-    {- 
+    {- a
     
     let tuplaMat = runEval $ do
 
