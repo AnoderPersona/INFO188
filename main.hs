@@ -28,10 +28,15 @@ parMat' :: Strategy Int -> Matriz -> Eval Matriz
 parMat' a = evalMat' (rparWith a)    
 -------------------------------------
 
-aListaDeString :: Matriz -> [[String]]
+{- aListaDeString :: Matriz -> [[String]]
 aListaDeString (Matriz _ _ []) = []
-aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> show x) (take col mat)))] : (aListaDeString (Matriz filas col (drop col mat)))
+aListaDeString (Matriz filas col mat) = [concat (intersperse " " (map (\x -> show x) (take col mat)))] : (aListaDeString (Matriz filas col (drop col mat))) -}
 
+
+alistadestring i (Matriz _ columnas []) = []
+alistadestring i (Matriz _ columnas (x:xs))
+    | columnas < i = show(x) ++ " "  ++ alistadestring (i+1) columnas xs
+    | otherwise = x : alistadestring 0 columnas mat
 
 {- productoMatricesEnteras :: Num a => Matrix a -> Matrix a -> Matrix a
 productoMatricesEnteras matrizA matrizB = multStd matrizA matrizB -}
@@ -106,10 +111,15 @@ main = do
     --
 
 {-     principioEscritura <- getCPUTime -}
-    --
+
+
+    {- --
     print "Escribiendo archivo..."
     writeFile fileC ( (show (filasMatriz matrizResultante)) ++ "\n" ++ (show (columnasMatriz matrizResultante)) ++ "\n" ++ (unlines (concat (aListaDeString matrizResultante))))
-    --
+    -- -}
+
+
+    
 {-     finEscritura <- getCPUTime
     let tiempo = (fromIntegral (finEscritura - principioEscritura))/(10^9)
     putStr ("\nEl tiempo de salida en milisegundos es de ")
