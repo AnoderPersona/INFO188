@@ -6,7 +6,8 @@ import System.CPUTime
 {- import Data.Matrix -}
 -------------------------------------
 import Control.Parallel.Strategies
-
+import Control.DeepSeq
+import Data.Time
 {- evalList' :: Strategy a -> Strategy [a]
 evalList' s [] = return []
 evalList' estrategia (a:as) = do
@@ -97,10 +98,11 @@ main = do
     let bloquesB = (aBloques matB (read bx :: Int) (read by :: Int))
 
     print "Calculando multiplicacion..."
-    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rseq)
-
-{-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
-    print (matrizResultante) -}
+    {- startMat <- getCurrentTime -}
+    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rdeepseq)
+    {- stopMat <- deepseq matrizResultante getCurrentTime -}
+{-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")-}
+    print (length (matriz matrizResultante)) 
 
     --
 {-     finProducto <- getCPUTime
