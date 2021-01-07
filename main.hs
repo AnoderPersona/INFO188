@@ -7,13 +7,13 @@ import System.CPUTime
 -------------------------------------
 import Control.Parallel.Strategies
 
-evalPair' :: Strategy a -> Strategy a
+{- evalPair' :: Strategy a -> Strategy a
 evalPair' estrategia a = do
     a' <- estrategia a
     return a'
 
-estrats :: Strategy a -> Strategy a
-estrats a = evalPair' (rparWith a)
+parPair' :: Strategy a -> Strategy a
+parPair' a = evalPair' (rparWith a) -}
 -------------------------------------
 
 aListaDeString :: Matriz -> [[String]]
@@ -60,6 +60,7 @@ main = do
     --
     let matA = Matriz (head matrizA) (head (tail matrizA)) (tail (tail matrizA))
     let matB = Matriz (head matrizB) (head (tail matrizB)) (tail (tail matrizB))
+    {- 
     
     let tuplaMat = runEval $ do
 
@@ -70,7 +71,12 @@ main = do
         rseq bloquesB
         return (bloquesA, bloquesB)
 
-    let matrizResultante = aplanar ((multiplicar (elemento0Tupla tuplaMat) (elemento1Tupla tuplaMat)) `using` estrats rseq)
+    let matrizResultante = aplanar ((multiplicar (elemento0Tupla tuplaMat) (elemento1Tupla tuplaMat)) `using` parPair' rseq) `using` parPair' rseq -}
+
+    let bloquesA = (aBloques matA (read bx :: Int) (read by :: Int))
+    let bloquesB = (aBloques matB (read bx :: Int) (read by :: Int))
+    
+    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB))
 
 {-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")
     print (matrizResultante) -}
