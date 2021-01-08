@@ -102,7 +102,7 @@ main = do
     let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) {- `using` (parMat' rseq) -}
     {- stopMat <- deepseq matrizResultante getCurrentTime -}
 {-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")-}
-   {-  print (length (matriz matrizResultante))  -}
+    print (head (matriz matrizResultante)) 
 
     --
 {-     finProducto <- getCPUTime
