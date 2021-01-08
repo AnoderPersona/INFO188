@@ -1,2 +1,2 @@
 all:
-	ghc -dynamic -threaded -rtsopts main.hs -o prog
+	ghc -dynamic -threaded -rtsopts -XStrict main.hs -o prog

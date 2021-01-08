@@ -99,10 +99,10 @@ main = do
 
     print "Calculando multiplicacion..."
     {- startMat <- getCurrentTime -}
-    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rdeepseq)
+    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rseq)
     {- stopMat <- deepseq matrizResultante getCurrentTime -}
 {-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")-}
-    print (length (matriz matrizResultante)) 
+   {-  print (length (matriz matrizResultante))  -}
 
     --
 {-     finProducto <- getCPUTime
