@@ -27,6 +27,15 @@ evalMat' estrat (Matriz x y (a:as)) = do
 
 parMat' :: Strategy Int -> Matriz -> Eval Matriz
 parMat' a = evalMat' (rparWith a)    
+
+{- cadaMatriz' estrat mat = evalMat' estrat (head mat) : (cadaMatriz' estrat (tail mat))
+
+
+cadaMatriz estrat (MatrizBloque x y mat) = (MatrizBloque x y (cadaMatriz' estrat mat))
+
+
+parMat' a = cadaMatriz' (rparWith a)     -}
+
 -------------------------------------
 
 {- aListaDeString :: Matriz -> [[String]]
@@ -98,12 +107,11 @@ main = do
     let bloquesB = (aBloques matB (read bx :: Int) (read by :: Int))
 
     print "Calculando multiplicacion..."
-    {- startMat <- getCurrentTime -}
-    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB))  `using` (parMat' rseq) 
-    {- stopMat <- deepseq matrizResultante getCurrentTime -}
+    startMat <- getCurrentTime
+    let matrizResultante = aplanar (multiplicar (bloquesA) (bloquesB)) `using` (parMat' rseq)
+    stopMat <-  getCurrentTime
 {-     putStr ("\nLa matriz obtenida por multiplicacion por bloques es: (para una mejor vista, ver el archivo de texto creado)  \n")-}
-    print ((matriz matrizResultante)) 
-
+    print (last (matriz matrizResultante)) 
     --
 {-     finProducto <- getCPUTime
     let tiempo = (fromIntegral (finProducto - principioProducto))/(10^9)
